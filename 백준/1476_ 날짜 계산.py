@@ -1,11 +1,8 @@
-# e,s,m=map(int,input().split())
-# cnt=1         
-# while True:
-#     if (cnt-e)%15==0 and (cnt-s)%28==0 and (cnt-m)%19==0:
-#         break
-#     cnt+=1
-# print(cnt)
-
-# print((cnt-e)%15)
-
-print((-3)%4)
+w=8
+h=12
+a=[1,2,1]
+cnt=0
+for i in range(h):
+    target=i%3
+    cnt+=a[target]
+answer=(w*h)-cnt
