@@ -1,29 +1,21 @@
 def solution(name):
-    change=[min((ord(i)-ord('A')), ord('Z')-ord(i)+1) for i in name] #상하 최소 거리 -> 알파벳 변경
-    count=0
-    answer=0
-    while True:
-        answer+=change[count]
-        change[count]=0
-        if sum(change)==0:
-            return answer
+	# count
+    answer = 0
+    # 최소 이동길이 ex) 5개의 문자가 있으면 최소한 4번은 움직여야하니까
+    min_move = len(name) - 1
+    
+    for i, char in enumerate(name):
+    	# 해당 알파벳 변경 최솟값 추가
+        answer += min(ord(char) - ord('A'), ord('Z') - ord(char) + 1)
         
-        
-        left ,right =1 ,1
-        while change[count-left]==0:
-            left+=1
-        while change[count-right]==0:
-            right+=1
+        # 해당 알파벳 다음부터 연속된 A 문자열 찾기 -> A가 반복되면 입력하고 넘어가는게 더 효율적
+        next = i + 1
+        while next < len(name) and name[next] == 'A':
+            next += 1
             
-        if left<right:
-            answer+=left
-        else:
-            answer+=right
-            
-        if left<right:
-            change-=left
-        else:
-            change-=right
+        # 기존, 연속된 A의 왼쪽시작 방식, 연속된 A의 오른쪽시작 방식 비교 및 갱신
+        min_move = min([min_move, 2 *i + len(name) - next, i + 2 * (len(name) -next)])
         
-        
-        
+    # 알파벳 변경(상하이동) 횟수에 좌우이동 횟수 추가
+    answer += min_move
+    return answer
